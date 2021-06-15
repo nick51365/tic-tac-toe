@@ -18,20 +18,48 @@ let displayController = (function(){
     let turnDisplay = document.getElementById("turnDisplay");
     turnDisplay.innerHTML = "Player One's Turn";
 
+    let checkWin = function(){
+        let winner = "";   
+        let winningCombos = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+        //Iterate through winningCombos to check if any are completed
+        for (i = 0;i < winningCombos.length; i++){
+            console.log(winningCombos[i]);
+            if (gameBoard.boardSpaces[winningCombos[i][0]] != ""){
+                if (gameBoard.boardSpaces[winningCombos[i][0]] === gameBoard.boardSpaces[winningCombos[i][1]] &&
+                    gameBoard.boardSpaces[winningCombos[i][1]] === gameBoard.boardSpaces[winningCombos[i][2]]){
+                    winner = whosTurn;
+                };
+        }
+    };
+
+        //If a winner is declared, announce winner and clear board
+        setTimeout(function(){
+            if (winner != ""){
+                alert(winner + " wins!");
+                gameBoard.boardSpaces = ["","","","","","","","",""];
+                displayController.displayMarks();
+                whosTurn = "playerOne";
+            };
+        },50); 
+    };
 
     return{
         markSpace : function(i){
             if(gameBoard.boardSpaces[i] === ""){
                 if (whosTurn === "playerOne"){
                     gameBoard.boardSpaces[i] = "X";
+                    this.displayMarks();
+                    checkWin();
                     whosTurn = "playerTwo";
                     turnDisplay.innerHTML = "Player Two's Turn";
                 }else if (whosTurn === "playerTwo"){
                     gameBoard.boardSpaces[i] = "O";
+                    this.displayMarks();
+                    checkWin();
                     whosTurn = "playerOne";
                     turnDisplay.innerHTML = "Player One's Turn";
                 }
-                this.displayMarks();
+
             }
         },
         displayMarks : function(){
@@ -46,8 +74,8 @@ let displayController = (function(){
     
 })();
 
+//player factory function
 const playerFactory = (marker) => {
-
     return {marker};
 };
 
