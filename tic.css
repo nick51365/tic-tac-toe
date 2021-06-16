@@ -1,35 +1,26 @@
-.boardWrapper{
-    display: block;
-    margin: auto;
-    border: 1px solid red;
-    height: 40vw;
-    width: 40vw;
-    margin-top: 50px;
-    max-height: 50vh;
-    max-width: 50vh;
-}
 .gameBoard{
     display: grid;
+    margin: auto;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
-    height: 100%;
-    width: 100%;
+    margin-top: 50px;
+    height: 40vw;
+    max-height: 60vh;
+    width: 40vw;
+    max-width: 60vh;
 }
 .boardSpace{
-    max-height: 16.47vw;
-    max-width: 16.47vw;
     border: 1px solid black;
-    font-size: 3em;
+    font-size: 6vw;
     text-align: center;
     vertical-align: middle;
-    line-height: 200%;
+    padding-top: 25%;
 }
 .turnDisplay{
     display: block;
     margin: auto;
     width: 40vw;
-    margin-top: 50px;
+    margin-top: 140px;
     text-align: center;
-    font-size: 40px;
-
+    font-size: 4vw;
 }
