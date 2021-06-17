@@ -19,15 +19,6 @@ let displayController = (function(){
     let turnDisplay = document.getElementById("turnDisplay");
     turnDisplay.innerHTML = "Player One's Turn";
 
-    //Reset the game
-    let resetGame = function(){
-        gameBoard.boardSpaces = ["","","","","","","","",""];
-        displayController.displayMarks();
-        turnDisplay.innerHTML = "Player One's Turn"
-        whosTurn = "playerOne";
-        movesMade = 0;
-    };
-
     //Check if a winning combination of spaces has been filled
     let checkWin = function(){
         let winner = "";   
@@ -45,22 +36,20 @@ let displayController = (function(){
         setTimeout(function(){
             if (winner != ""){
                 if (winner === "playerOne"){
-                    alert("Player One Wins!");
+                    turnDisplay.innerHTML = "Player One Wins!";
                 }else{
-                    alert("Player Two Wins!");
+                    turnDisplay.innerHTML = "Player Two Wins!";
                 }       
-                resetGame();
             };
-        },50); 
+        },0); 
     };
     //Checks if the game has reached a tie 
     //If so, announces a tie and resets the board
     let checkTie = function(){
         if (movesMade === 9){
             setTimeout(function(){
-                alert("Tie!");
-                resetGame();
-            },50);
+                turnDisplay.innerHTML = "Tie!";
+            },0);
         }
     };
 
@@ -95,13 +84,20 @@ let displayController = (function(){
                 space.innerHTML = gameBoard.boardSpaces[i];
             }
         },
+        resetGame : function(){
+            gameBoard.boardSpaces = ["","","","","","","","",""];
+            displayController.displayMarks();
+            turnDisplay.innerHTML = "Player One's Turn"
+            whosTurn = "playerOne";
+            movesMade = 0;
+        },
     };
     
 })();
 
 //player factory function
 const playerFactory = (marker) => {
-    return {marker};
+    return {marker,name};
 };
 
 //Add event listeners to boardSpaces
@@ -112,6 +108,10 @@ for (i = 0; i < spaces.length; i++){
         displayController.markSpace(pos);
     })
 };
+
+//Add event listener to reset button
+let resetButton = document.getElementById("resetButton");
+resetButton.addEventListener("click",() => displayController.resetGame());
 
 //Create two player objects
 const playerOne = playerFactory("X");
